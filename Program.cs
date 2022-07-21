@@ -35,7 +35,8 @@ namespace SqliteInsert
         private static SqliteCommand SetAttributeCommand(TempClass item, string index)
         {
             SqliteCommand command = new SqliteCommand();
-            command.CommandText = @"INSERT into AspNetUsers VALUES('" + index + "','" + index + "','" + item.name + "','" + item.lastname + "','" + item.password + "','" + item.username + "');";
+            command.CommandText = @"INSERT into *INSERT THE TABLE NAME* VALUES(*INSERT VALUES*);";
+            // Example -> command.CommandText = @"INSERT into AspNetUsers VALUES('" + index + "','" + index + "','" + item.name + "','" + item.lastname + "','" + item.password + "','" + item.username + "');";
             return command;
         }
 
