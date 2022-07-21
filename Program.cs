@@ -13,14 +13,11 @@ namespace SqliteInsert
             {
                 connection.Open();
                 List<TempClass> list = ListTempClass.getlist();
-                SqliteCommand command = SetCommand(connection);
                 int index = 1;
 
                 foreach (var item in list)
                 {
-                    command = SetCommand(connection);
-                    command = SetAttributeCommand(command, item, Convert.ToString(index));
-
+                    SqliteCommand command = SetAttributeCommand(item, Convert.ToString(index));
                     try
                     {
                         command.ExecuteNonQuery();
@@ -29,31 +26,16 @@ namespace SqliteInsert
                     catch (Exception exception)
                     {
                         throw new Exception(exception.Message);
-                        Console.Write("Oops something gone wrong.");
                     }
                     index++;
                 }
             }
         }
 
-        private static SqliteCommand SetCommand(SqliteConnection connection)
+        private static SqliteCommand SetAttributeCommand(TempClass item, string index)
         {
-            var command = connection.CreateCommand();
-            command.CommandText = @"INSERT INTO AspNetUsers (id, Discriminator, name, lastname, password, UserName) VALUES(@id, @Discriminator, @name, @lastname, @password, @UserName)";
-/*
-            command.Parameters.Add(new SqliteParameter("@id", SqliteType.Text));
-            command.Parameters.Add(new SqliteParameter("@Discriminator", SqliteType.Text));
-            command.Parameters.Add(new SqliteParameter("@name", SqliteType.Text));
-            command.Parameters.Add(new SqliteParameter("@lastname", SqliteType.Text));
-            command.Parameters.Add(new SqliteParameter("@password", SqliteType.Text));
-            command.Parameters.Add(new SqliteParameter("@UserName", SqliteType.Text));*/
-
-            return command;
-        }
-
-        private static SqliteCommand SetAttributeCommand(SqliteCommand command, TempClass item, string index)
-        {
-            command.CommandText = @"INSERT into AspNetUsers VALUES('"+index+"','"+index+"','"+item.name+"','"+item.lastname +"','"+item.password+"','"+item.username+"');";
+            SqliteCommand command = new SqliteCommand();
+            command.CommandText = @"INSERT into AspNetUsers VALUES('" + index + "','" + index + "','" + item.name + "','" + item.lastname + "','" + item.password + "','" + item.username + "');";
             return command;
         }
 
